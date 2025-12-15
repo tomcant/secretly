@@ -28,3 +28,38 @@ jobs:
           node-version-file: frontend/.nvmrc
       - run: npm ci
       - run: npm run can-release
+
+  test-e2e:
+    name: Test e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Start backend
+        working-directory: ./backend
+        run: make start
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: frontend/.nvmrc
+
+      - name: Start frontend
+        working-directory: ./frontend
+        run: |
+          cp .env.example .env
+          sed -i 's/localhost/host.docker.internal/g' .env
+          npm ci && npm run dev &
+
+      - name: Run e2e tests
+        working-directory: ./e2e
+        run: make run-e2e
+
+      # Ensure files are readable for the upload-artifact
+      # step since they were written by the k6 user
+      - run: sudo chmod -R a+r ./e2e/screenshots
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: e2e-screenshots
+          path: ./e2e/screenshots
+          if-no-files-found: error

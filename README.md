@@ -62,6 +62,12 @@ make start # http://localhost:8000
 
 Run all the same checks as CI with `npm run can-release` (frontend) and `make can-release` (backend).
 
+Additionally, end-to-end tests can be found in [./e2e](./e2e).
+Run them with `make run-e2e`.
+This assumes [k6](https://k6.io) is installed on your machine.
+Alternatively, run in Docker the way CI does with `CI=1 make run-e2e`.
+You can also run them in non-headless mode with `HEADLESS=0 make run-e2e` (requires a Chromium-based browser).
+
 ## API Documentation
 
 Once the backend is running, interactive API documentation is available at:
