@@ -20,7 +20,7 @@ provider:
   environment:
     APP_ENV: prod
     DATABASE_URL: ${env:DATABASE_URL}
-    CORS_ALLOWED_ORIGIN: 'https://tomcant.dev'
+    CORS_ALLOWED_ORIGIN: 'https://secretly.tomcant.dev'
   ecr:
     images:
       backend:

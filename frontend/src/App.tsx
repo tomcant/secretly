@@ -14,7 +14,7 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<CreateSecret />} />
-            <Route path="/secret/:id" element={<ViewSecret />} />
+            <Route path="/s/:id" element={<ViewSecret />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

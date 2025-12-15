@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function NotFound() {
   return (
     <div className="max-w-xl w-full animate-fade-in">
@@ -25,15 +27,30 @@ export default function NotFound() {
 
       {/* Error Card */}
       <div className="glass-effect rounded-3xl p-4 sm:p-6 md:p-10 card-shadow-lg backdrop-blur-xl border-2 border-red-500/40">
-        <p className="text-white text-base sm:text-lg mb-6 sm:mb-8 text-center px-2">
+        <p className="text-white text-base sm:text-lg mb-6 sm:mb-8 text-center">
           The page you're looking for doesn't exist.
         </p>
-        <a
-          href="/"
-          className="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] card-shadow-lg text-center flex items-center justify-center gap-2 sm:gap-3 text-base sm:text-lg"
-        >
-          <span>← Go to home page</span>
-        </a>
+        <div className="text-center">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] card-shadow-lg text-base sm:text-lg"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            <span>Back Home</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

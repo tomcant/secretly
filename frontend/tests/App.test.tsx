@@ -26,11 +26,7 @@ describe("App routing", () => {
       ),
     );
 
-    window.history.pushState(
-      {},
-      "View Secret",
-      `/secret/abc#${payload.keyBase64}`,
-    );
+    window.history.pushState({}, "View Secret", `/s/abc#${payload.keyBase64}`);
 
     render(<App />);
 

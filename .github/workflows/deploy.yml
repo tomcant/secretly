@@ -16,6 +16,7 @@ jobs:
 
   deploy-backend:
     needs: test
+    name: Deploy backend
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,6 +24,8 @@ jobs:
     defaults:
       run:
         working-directory: ./backend
+    outputs:
+      backend_url: ${{ steps.deploy-to-lambda.outputs.url }}
     steps:
       - uses: actions/checkout@v6
 
@@ -37,7 +40,50 @@ jobs:
         run: npm install -g serverless@3.40.0
 
       - name: Deploy to Lambda
-        run: serverless deploy --verbose --conceal --stage prod --region "${AWS_REGION}"
+        id: deploy-to-lambda
+        run: |
+          serverless deploy --verbose --conceal --stage prod --region "${AWS_REGION}"
+          BACKEND_URL="$(
+            serverless info --stage prod --region "${AWS_REGION}" \
+              | grep -Eo 'https://[^[:space:]]+lambda-url[^[:space:]]*' | head -n1
+          )"
+          if [ -z "$BACKEND_URL" ]; then
+            echo "Failed to parse backend URL from serverless info output" >&2
+            exit 1
+          fi
+          echo "url=${BACKEND_URL%/}" >> "$GITHUB_OUTPUT"
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           BUILDX_NO_DEFAULT_ATTESTATIONS: 1
+
+  deploy-frontend:
+    needs: deploy-backend
+    name: Deploy frontend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+        id: pages
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: frontend/.nvmrc
+      - run: npm ci
+      - run: npm run build
+        env:
+          VITE_BACKEND_URL: ${{ needs.deploy-backend.outputs.backend_url }}
+          VITE_FRONTEND_URL: ${{ steps.pages.outputs.base_url }}
+      - run: cp dist/index.html dist/404.html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./frontend/dist
+      - uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

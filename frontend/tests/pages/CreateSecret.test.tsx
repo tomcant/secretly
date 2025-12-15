@@ -55,11 +55,11 @@ describe("CreateSecret page", () => {
     );
 
     const shareableLink = (await screen.findByDisplayValue((value) =>
-      value.startsWith(`${FRONTEND_URL}/secret/abc123#`),
+      value.startsWith(`${FRONTEND_URL}/s/abc123#`),
     )) as HTMLInputElement;
 
     expect(shareableLink.value.length).toBeGreaterThan(
-      `${FRONTEND_URL}/secret/abc123#`.length,
+      `${FRONTEND_URL}/s/abc123#`.length,
     );
     expect(screen.getByPlaceholderText("Enter your secret...")).toHaveValue("");
   });
@@ -126,7 +126,7 @@ describe("CreateSecret page", () => {
 
     // Allow time for the shareable link to be visible before copying
     const shareableLink = (await screen.findByDisplayValue((value) =>
-      value.startsWith(`${FRONTEND_URL}/secret/abc123#`),
+      value.startsWith(`${FRONTEND_URL}/s/abc123#`),
     )) as HTMLInputElement;
 
     const copyButton = screen.getByRole("button", { name: /copy/i });
@@ -164,7 +164,7 @@ describe("CreateSecret page", () => {
     );
 
     await screen.findByDisplayValue((value) =>
-      value.startsWith(`${FRONTEND_URL}/secret/abc123#`),
+      value.startsWith(`${FRONTEND_URL}/s/abc123#`),
     );
 
     fireEvent.click(screen.getByRole("button", { name: /copy/i }));

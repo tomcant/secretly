@@ -1,5 +1,6 @@
 {
   "name": "secretly-frontend",
+  "homepage": "https://secretly.tomcant.dev",
   "private": true,
   "version": "0.1.0",
   "type": "module",

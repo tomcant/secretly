@@ -10,7 +10,7 @@ export default defineConfig({
     host: true,
     allowedHosts: true,
   },
-  base: "./",
+  base: "/",
   resolve: {
     alias: {
       "#": path.resolve(__dirname, "src/"),

@@ -33,7 +33,7 @@ export default function CreateSecret() {
         iv: ivBase64,
       });
 
-      setShareableUrl(`${FRONTEND_URL}/secret/${response.id}#${keyBase64}`);
+      setShareableUrl(`${FRONTEND_URL}/s/${response.id}#${keyBase64}`);
       setSecret("");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

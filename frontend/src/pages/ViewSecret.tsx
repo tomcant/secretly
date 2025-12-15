@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import { getSecret } from "#/api/client";
 import { copyToClipboard } from "#/lib/clipboard";
 import {
@@ -256,12 +256,27 @@ export default function ViewSecret() {
         </div>
       </div>
 
-      <a
-        href="/"
-        className="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] card-shadow-lg text-center flex items-center justify-center gap-2 sm:gap-3 text-base sm:text-lg"
-      >
-        <span>← Create a new secret</span>
-      </a>
+      <div className="text-center">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] card-shadow-lg text-base sm:text-lg"
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          <span>Create a new secret</span>
+        </Link>
+      </div>
     </div>
   );
 }
