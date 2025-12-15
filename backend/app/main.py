@@ -1,5 +1,8 @@
+import asyncio
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from mangum import Mangum
 
 from .config import settings
 from .routers import health, secrets
@@ -25,3 +28,8 @@ app.add_middleware(
 
 app.include_router(secrets.router)
 app.include_router(health.router)
+
+handler = Mangum(app)
+
+if settings.APP_ENV == "prod":
+    asyncio.set_event_loop(asyncio.new_event_loop())
