@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { getSecret } from "#/api/client";
 import { copyToClipboard } from "#/lib/clipboard";
 import {
@@ -7,6 +7,7 @@ import {
   decryptSecret,
   importKeyFromBase64,
 } from "#/lib/crypto";
+import BackLink from "./components/BackLink";
 
 export default function ViewSecret() {
   const { id } = useParams<{ id: string }>();
@@ -118,14 +119,11 @@ export default function ViewSecret() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Error
             </h2>
-            <p className="text-white text-base sm:text-lg px-2">{error}</p>
+            <p className="text-white text-base sm:text-lg">{error}</p>
           </div>
-          <a
-            href="/"
-            className="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] card-shadow text-center text-sm sm:text-base"
-          >
-            ← Create a new secret
-          </a>
+          <div className="text-center">
+            <BackLink>Create a new secret</BackLink>
+          </div>
         </div>
       </div>
     );
@@ -257,25 +255,7 @@ export default function ViewSecret() {
       </div>
 
       <div className="text-center">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] card-shadow-lg text-base sm:text-lg"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
-          <span>Create a new secret</span>
-        </Link>
+        <BackLink>Create a new secret</BackLink>
       </div>
     </div>
   );
